@@ -1,0 +1,28 @@
+blueprint:
+  name: ESPHome Wizmote to MQTT
+  description: Publish WIZmote events to MQTT
+  domain: automation
+  
+trigger:
+  - platform: event
+    event_type: esphome.wizmote_action
+    event_data:
+      mac: !mac_address
+    id: wizmote_action
+  - platform: event
+    event_type: esphome.wizmote_choose
+    event_data:
+      mac: !mac_address
+    id: wizmote_choose
+condition:
+  - condition: trigger
+    id:
+      - wizmote_action
+      - wizmote_choose
+action:
+  - service: mqtt.publish
+    data:
+      qos: "1"
+      payload_template: "{{ trigger.event }}"
+      topic: wizmote/event
+mode: single
