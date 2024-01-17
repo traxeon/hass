@@ -2,17 +2,21 @@ blueprint:
   name: ESPHome Wizmote to MQTT
   description: Publish WIZmote events to MQTT
   domain: automation
+  author: Ken Kauffman DBA Traxeon
+  input:
+    mac_address:
+      name: WIZmote Mac Address
   
 trigger:
   - platform: event
     event_type: esphome.wizmote_action
     event_data:
-      mac: !mac_address
+      mac: !input mac_address
     id: wizmote_action
   - platform: event
     event_type: esphome.wizmote_choose
     event_data:
-      mac: !mac_address
+      mac: !input mac_address
     id: wizmote_choose
 condition:
   - condition: trigger
