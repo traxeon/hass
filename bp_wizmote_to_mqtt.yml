@@ -5,7 +5,7 @@ blueprint:
   author: Ken Kauffman DBA Traxeon
   input:
     mac_address:
-      name: WIZmote Mac Address
+      name: Enter mac address for WIZMote (case sensitive)
   
 trigger:
   - platform: event
