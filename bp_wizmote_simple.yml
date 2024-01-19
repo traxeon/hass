@@ -12,6 +12,8 @@ blueprint:
       selector:
         target:
           entity:
+            device_class:
+              - power
             domain: switch
 
 alias: Turn on and off device
