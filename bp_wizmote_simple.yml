@@ -6,7 +6,7 @@ blueprint:
   input:
     mac_address:
       name: Enter mac address for WIZMote (case sensitive)
-    switch_1:
+    switch_one:
       name: Switch to control
       description: The switch to control
       selector:
@@ -40,12 +40,12 @@ action:
               - wizmote_button_on
         sequence:
           - service: switch.turn_on
-            target: !input switch_1
+            target: !input switch_one
       - conditions:
           - condition: trigger
             id:
               - wizmote_button_off
         sequence:
           - service: switch.turn_off
-            target: !input switch_1
+            target: !input switch_one
 mode: single
