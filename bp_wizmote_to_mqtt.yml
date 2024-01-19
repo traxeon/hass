@@ -27,6 +27,6 @@ action:
   - service: mqtt.publish
     data:
       qos: "1"
-      payload_template: "{{ trigger.event.data | tojson }}"
+      payload_template: "{{ trigger.event | tojson }}"
       topic: wizmote/event
 mode: single
