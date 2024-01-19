@@ -1,1 +1,49 @@
+blueprint:
+  name: ESPHome Wizmote Event Handler
+  description: Pull events from HASS to trigger a device action
+  domain: automation
+  author: Ken Kauffman DBA Traxeon
+  input:
+    mac_address:
+      name: Enter mac address for WIZMote (case sensitive)
+    device:
+      name: switch_1
+      description: The switch to control
+      selector:
+        target:
+          entity:
+            domain: switch
 
+alias: Turn on and off device
+description: "Use for turning on and off switch only"
+trigger:
+  - platform: event
+    event_type: esphome.wizmote_action
+    event_data:
+      mac: !input mac_address
+      button: "1"
+    id: wizmote_button_on
+  - platform: event
+    event_type: esphome.wizmote_action
+    event_data:
+      mac: !input mac_address
+      button: "2"
+    id: wizmote_button_off
+condition: []
+action:
+  - choose:
+      - conditions:
+          - condition: trigger
+            id:
+              - wizmote_button_on
+        sequence:
+          - service: switch.turn_on
+            target: "{{ switch_1 }}"
+      - conditions:
+          - condition: trigger
+            id:
+              - wizmote_button_off
+        sequence:
+          - service: switch.turn_off
+            target: "{{ switch_1 }}"
+mode: single
