@@ -6,7 +6,7 @@ blueprint:
   input:
     mac_address:
       name: Enter mac address for WIZMote (case sensitive)
-    device:
+    switch_1:
       name: switch_1
       description: The switch to control
       selector:
