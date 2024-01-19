@@ -40,12 +40,12 @@ action:
               - wizmote_button_on
         sequence:
           - service: switch.turn_on
-            target: "{{ switch_1 }}"
+            target: !input switch_1
       - conditions:
           - condition: trigger
             id:
               - wizmote_button_off
         sequence:
           - service: switch.turn_off
-            target: "{{ switch_1 }}"
+            target: !input switch_1
 mode: single
