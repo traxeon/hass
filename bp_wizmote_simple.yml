@@ -20,13 +20,13 @@ trigger:
   - platform: event
     event_type: esphome.wizmote_action
     event_data:
-      mac: !input mac_address
+      mac: !input "mac_address"
       button: "1"
     id: wizmote_button_on
   - platform: event
     event_type: esphome.wizmote_action
     event_data:
-      mac: !input mac_address
+      mac: !input "mac_address"
       button: "2"
     id: wizmote_button_off
 condition: []
@@ -38,12 +38,12 @@ action:
               - wizmote_button_on
         sequence:
           - service: switch.turn_on
-            target: !input switch_one
+            target: !input "switch_one"
       - conditions:
           - condition: trigger
             id:
               - wizmote_button_off
         sequence:
           - service: switch.turn_off
-            target: !input switch_one
+            target: !input "switch_one"
 mode: single
