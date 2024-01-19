@@ -4,19 +4,19 @@ blueprint:
   domain: automation
   author: Ken Kauffman DBA Traxeon
   input:
-    mac_address:
+    remote:
       name: Enter mac address for WIZMote (case sensitive)
   
 trigger:
   - platform: event
     event_type: esphome.wizmote_action
     event_data:
-      mac: !input mac_address
+      mac: !input "remote"
     id: wizmote_action
   - platform: event
     event_type: esphome.wizmote_choose
     event_data:
-      mac: !input mac_address
+      mac: !input "remote"
     id: wizmote_choose
 condition:
   - condition: trigger
@@ -27,6 +27,6 @@ action:
   - service: mqtt.publish
     data:
       qos: "1"
-      payload_template: "{{ trigger.event | tojson }}"
+      payload_template: "{{ trigger.event.data | tojson }}"
       topic: wizmote/event
 mode: single
