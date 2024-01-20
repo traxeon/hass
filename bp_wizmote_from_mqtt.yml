@@ -6,7 +6,7 @@ blueprint:
   input:
     mac_address:
       name: Enter mac address for WIZMote (case sensitive)
-    light:
+    target_light:
       name: Light to control
       description: The light to control
       selector:
@@ -36,7 +36,7 @@ action:
             value_template: "{{ trigger.payload_json.button == \"1\" }}"
         sequence:
           - type: turn_on
-            entity_id: !input light
+            entity_id: !input target_light
             domain: light
             brightness_pct: 25
       - conditions:
@@ -47,7 +47,7 @@ action:
             value_template: "{{ trigger.payload_json.button == \"2\" }}"
         sequence:
           - type: turn_off
-            entity_id: !input light
+            entity_id: !input target_light
             domain: light
       - conditions:
           - condition: trigger
@@ -57,7 +57,7 @@ action:
             value_template: "{{ trigger.payload_json.button == \"3\" }}"
         sequence:
           - type: turn_on
-            entity_id: !input light
+            entity_id: !input target_light
             domain: light
             brightness_pct: 5
       - conditions:
@@ -68,7 +68,7 @@ action:
             value_template: "{{ trigger.payload_json.button == \"1\" }}"
         sequence:
           - type: turn_on
-            entity_id: !input light
+            entity_id: !input target_light
             domain: light
             brightness_pct: 15
       - conditions:
@@ -79,7 +79,7 @@ action:
             value_template: "{{ trigger.payload_json.button == \"2\" }}"
         sequence:
           - type: turn_on
-            entity_id: !input light
+            entity_id: !input target_light
             domain: light
             brightness_pct: 35
       - conditions:
@@ -90,7 +90,7 @@ action:
             value_template: "{{ trigger.payload_json.button == \"3\" }}"
         sequence:
           - type: turn_on
-            entity_id: !input light
+            entity_id: !input target_light
             domain: light
             brightness_pct: 75
       - conditions:
@@ -101,7 +101,7 @@ action:
             value_template: "{{ trigger.payload_json.button == \"4\" }}"
         sequence:
           - type: turn_on
-            entity_id: !input light
+            entity_id: !input target_light
             domain: light
             brightness_pct: 100
       - conditions:
@@ -112,7 +112,7 @@ action:
             value_template: "{{ trigger.payload_json.button == \"8\" }}"
         sequence:
           - type: brightness_decrease
-            entity_id: !input light
+            entity_id: !input target_light
             domain: light
       - conditions:
           - condition: trigger
@@ -122,7 +122,7 @@ action:
             value_template: "{{ trigger.payload_json.button == \"9\" }}"
         sequence:
           - type: brightness_increase
-            entity_id: !input light
+            entity_id: !input target_light
             domain: light
             
 mode: single
