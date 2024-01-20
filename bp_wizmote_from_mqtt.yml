@@ -25,7 +25,7 @@ trigger:
     id: wizmote_choose
 condition:
   - condition: template
-    value_template: "{{ trigger.payload_json.mac == '!input remote'" }}"
+    value_template: "{{ trigger.payload_json.mac == `!input remote`" }}"
 action:
   - choose:
       - conditions:
