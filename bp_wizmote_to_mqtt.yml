@@ -24,9 +24,27 @@ condition:
       - wizmote_action
       - wizmote_choose
 action:
-  - service: mqtt.publish
-    data:
-      qos: "1"
-      payload_template: "{{ trigger.event.data | tojson }}"
-      topic: wizmote/event
-mode: single
+  - choose:
+      - conditions:
+          - condition: trigger
+            id:
+              - wizmote_action
+        sequence:
+          - service: mqtt.publish
+            metadata: {}
+            data:
+              qos: "1"
+              topic: wizmote/event/action
+              payload_template: "{{ trigger.event.data | tojson }}"
+      - conditions:
+          - condition: trigger
+            id:
+              - wizmote_choose
+        sequence:
+          - service: mqtt.publish
+            metadata: {}
+            data:
+              qos: "1"
+              topic: wizmote/event/choose
+              payload_template: "{{ trigger.event.data | tojson }}"
+mode: restart
