@@ -1,0 +1,128 @@
+blueprint:
+  name: Wizmote MQTT events
+  description: Process WIZMote button presses from MQTT message data
+  domain: automation
+  author: Ken Kauffman DBA Traxeon
+  input:
+    mac_address:
+      name: Enter mac address for WIZMote (case sensitive)
+    light:
+      name: Light to control
+      description: The light to control
+      selector:
+        target:
+          entity:
+            domain: light
+            
+alias: WizMote Automation Control
+description: Read WIZmote events from MQTT and action; filtered by remote mac
+trigger:
+  - platform: mqtt
+    topic: wizmote/event/action
+    id: wizmote_action
+  - platform: mqtt
+    topic: wizmote/event/choose
+    id: wizmote_choose
+condition:
+  - condition: template
+    value_template: "{{ trigger.payload_json.mac == !input remote" }}"
+action:
+  - choose:
+      - conditions:
+          - condition: trigger
+            id:
+              - wizmote_action
+          - condition: template
+            value_template: "{{ trigger.payload_json.button == \"1\" }}"
+        sequence:
+          - type: turn_on
+            entity_id: !input light
+            domain: light
+            brightness_pct: 25
+      - conditions:
+          - condition: trigger
+            id:
+              - wizmote_action
+          - condition: template
+            value_template: "{{ trigger.payload_json.button == \"2\" }}"
+        sequence:
+          - type: turn_off
+            entity_id: !input light
+            domain: light
+      - conditions:
+          - condition: trigger
+            id:
+              - wizmote_action
+          - condition: template
+            value_template: "{{ trigger.payload_json.button == \"3\" }}"
+        sequence:
+          - type: turn_on
+            entity_id: !input light
+            domain: light
+            brightness_pct: 5
+      - conditions:
+          - condition: trigger
+            id:
+              - wizmote_choose
+          - condition: template
+            value_template: "{{ trigger.payload_json.button == \"1\" }}"
+        sequence:
+          - type: turn_on
+            entity_id: !input light
+            domain: light
+            brightness_pct: 15
+      - conditions:
+          - condition: trigger
+            id:
+              - wizmote_choose
+          - condition: template
+            value_template: "{{ trigger.payload_json.button == \"2\" }}"
+        sequence:
+          - type: turn_on
+            entity_id: !input light
+            domain: light
+            brightness_pct: 35
+      - conditions:
+          - condition: trigger
+            id:
+              - wizmote_choose
+          - condition: template
+            value_template: "{{ trigger.payload_json.button == \"3\" }}"
+        sequence:
+          - type: turn_on
+            entity_id: !input light
+            domain: light
+            brightness_pct: 75
+      - conditions:
+          - condition: trigger
+            id:
+              - wizmote_choose
+          - condition: template
+            value_template: "{{ trigger.payload_json.button == \"4\" }}"
+        sequence:
+          - type: turn_on
+            entity_id: !input light
+            domain: light
+            brightness_pct: 100
+      - conditions:
+          - condition: trigger
+            id:
+              - wizmote_action
+          - condition: template
+            value_template: "{{ trigger.payload_json.button == \"8\" }}"
+        sequence:
+          - type: brightness_decrease
+            entity_id: !input light
+            domain: light
+      - conditions:
+          - condition: trigger
+            id:
+              - wizmote_action
+          - condition: template
+            value_template: "{{ trigger.payload_json.button == \"9\" }}"
+        sequence:
+          - type: brightness_increase
+            entity_id: !input light
+            domain: light
+            
+mode: single
