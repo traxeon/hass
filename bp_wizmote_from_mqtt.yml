@@ -1,3 +1,5 @@
+## not functioning yet
+
 blueprint:
   name: Wizmote MQTT events
   description: Process WIZMote button presses from MQTT message data
