@@ -13,9 +13,7 @@ blueprint:
         target:
           entity:
             domain: light
-  variables:
-    mac_lookup: !input mac_address
-           
+
 alias: WizMote Automation Control
 description: Read WIZmote events from MQTT and action; filtered by remote mac
 trigger:
